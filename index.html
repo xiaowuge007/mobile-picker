@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>picker</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body{
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<button id="btn">点击</button>
+   <script src="js/picker.js"></script>
+    <script>
+        var data = {
+            data:[
+                {
+                    id: '1',
+                    text: 'p1',
+                    children: [
+                        {
+                            id: '11',
+                            text: 'p11',
+                            children: [
+                                {
+                                    id: '111',
+                                    text: 'p111'
+                                },
+                                {
+                                    id: '112',
+                                    text: 'p112'
+                                },
+                                {
+                                    id: '113',
+                                    text: 'p113',
+                                    children:[
+                                        {
+                                            id: '1131',
+                                            text: 'p1131',
+                                            children:[
+                                                {
+                                                    id:'11311',
+                                                    text: 'p11311'
+                                                },
+                                                {
+                                                    id:'11312',
+                                                    text: 'p11312'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            id: '1132',
+                                            text: 'p1132',
+                                            children:[
+                                                {
+                                                    id:'11321',
+                                                    text: 'p11321'
+                                                },
+                                                {
+                                                    id:'11322',
+                                                    text: 'p11322'
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: '114',
+                                    text: 'p114'
+                                }
+                            ]
+                        },
+                        {
+                            id: '12',
+                            text: 'p12',
+                            children: [
+                                {
+                                    id: '121',
+                                    text: 'p121'
+                                },
+                                {
+                                    id: '122',
+                                    text: 'p122'
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: '2',
+                    text: 'p2',
+                    children: [
+                        {
+                            id: '21',
+                            text: 'p21',
+                            /*children: [
+                                {
+                                    id: '211',
+                                    text: 'p211'
+                                },
+                                {
+                                    id: '212',
+                                    text: 'p212'
+                                }
+                            ]*/
+                        },
+                        {
+                            id: '22',
+                            text: 'p22',
+                            children: [
+                                {
+                                    id: '221',
+                                    text: 'p221'
+                                },
+                                {
+                                    id: '222',
+                                    text: 'p222'
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: '3',
+                    text: 'p3',
+                    children: [
+                        {
+                            id: '31',
+                            text: 'p31',
+                            children: [
+                                {
+                                    id: '311',
+                                    text: 'p311'
+                                },
+                                {
+                                    id: '312',
+                                    text: 'p312'
+                                },
+                                {
+                                    id: '313',
+                                    text: 'p313'
+                                },
+                                {
+                                    id: '314',
+                                    text: 'p314'
+                                }
+                            ]
+                        },
+                        {
+                            id: '32',
+                            text: 'p32',
+                            children: [
+                                {
+                                    id: '321',
+                                    text: 'p321'
+                                },
+                                {
+                                    id: '322',
+                                    text: 'p322'
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+        var p1 = new Picker({
+            el: document.getElementById('btn'),
+            title: '请选择',
+            format: 'yyyy-MM-dd',
+            isDate: true,
+            value: new Date('2018-02-20'),
+            callBack(res) {
+                console.log(res)
+            }
+        })
+    </script>
+</body>
+</html>
