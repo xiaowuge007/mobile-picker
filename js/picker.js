@@ -4,7 +4,7 @@
     function Picker(option) {
         this.el = option.el;
         this.isMove = false;
-        this.interlock = !Array.isArray(this.data);
+        this.interlock = !Array.isArray(option.data);
         this.isDate = option.isDate;
         if (!this.isDate) {
             if (this.interlock) {

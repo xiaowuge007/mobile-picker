@@ -7,177 +7,241 @@
     <title>picker</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        body{
+        body {
             margin: 0;
+            padding: 20px;
+        }
+        .btn{
+            margin-right: 10px;
+        }
+        .div{
+            margin-bottom: 8px;
         }
     </style>
 </head>
 <body>
-<button id="btn">点击</button>
-   <script src="js/picker.js"></script>
-    <script>
-        var data = {
-            data:[
-                {
-                    id: '1',
-                    text: 'p1',
-                    children: [
-                        {
-                            id: '11',
-                            text: 'p11',
-                            children: [
-                                {
-                                    id: '111',
-                                    text: 'p111'
-                                },
-                                {
-                                    id: '112',
-                                    text: 'p112'
-                                },
-                                {
-                                    id: '113',
-                                    text: 'p113',
-                                    children:[
-                                        {
-                                            id: '1131',
-                                            text: 'p1131',
-                                            children:[
-                                                {
-                                                    id:'11311',
-                                                    text: 'p11311'
-                                                },
-                                                {
-                                                    id:'11312',
-                                                    text: 'p11312'
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            id: '1132',
-                                            text: 'p1132',
-                                            children:[
-                                                {
-                                                    id:'11321',
-                                                    text: 'p11321'
-                                                },
-                                                {
-                                                    id:'11322',
-                                                    text: 'p11322'
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    id: '114',
-                                    text: 'p114'
-                                }
-                            ]
-                        },
-                        {
-                            id: '12',
-                            text: 'p12',
-                            children: [
-                                {
-                                    id: '121',
-                                    text: 'p121'
-                                },
-                                {
-                                    id: '122',
-                                    text: 'p122'
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    id: '2',
-                    text: 'p2',
-                    children: [
-                        {
-                            id: '21',
-                            text: 'p21',
-                            /*children: [
-                                {
-                                    id: '211',
-                                    text: 'p211'
-                                },
-                                {
-                                    id: '212',
-                                    text: 'p212'
-                                }
-                            ]*/
-                        },
-                        {
-                            id: '22',
-                            text: 'p22',
-                            children: [
-                                {
-                                    id: '221',
-                                    text: 'p221'
-                                },
-                                {
-                                    id: '222',
-                                    text: 'p222'
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    id: '3',
-                    text: 'p3',
-                    children: [
-                        {
-                            id: '31',
-                            text: 'p31',
-                            children: [
-                                {
-                                    id: '311',
-                                    text: 'p311'
-                                },
-                                {
-                                    id: '312',
-                                    text: 'p312'
-                                },
-                                {
-                                    id: '313',
-                                    text: 'p313'
-                                },
-                                {
-                                    id: '314',
-                                    text: 'p314'
-                                }
-                            ]
-                        },
-                        {
-                            id: '32',
-                            text: 'p32',
-                            children: [
-                                {
-                                    id: '321',
-                                    text: 'p321'
-                                },
-                                {
-                                    id: '322',
-                                    text: 'p322'
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-        var p1 = new Picker({
-            el: document.getElementById('btn'),
-            title: '请选择',
-            format: 'yyyy-MM-dd',
-            isDate: true,
-            value: new Date('2018-02-20'),
-            callBack(res) {
-                console.log(res)
+<div class="div">
+    <button class="btn" id="btn-timer">日期选择器</button>
+    <span id="btn-timer-val"></span>
+</div>
+<div class="div">
+    <button class="btn" id="btn-timer2">时间选择器</button>
+    <span id="btn-timer-val2"></span>
+</div>
+<div class="div">
+    <button class="btn" id="btn-common">普通选择器</button>
+    <span id="btn-common-val"></span>
+</div>
+<div class="div">
+    <button class="btn" id="btn-linkage">联动选择器</button>
+    <span id="btn-linkage-val"></span>
+</div>
+<script src="js/picker.js"></script>
+<script>
+    var data = {
+        data: [
+            {
+                id: '1',
+                text: 'p1',
+                children: [
+                    {
+                        id: '11',
+                        text: 'p11',
+                        children: [
+                            {
+                                id: '111',
+                                text: 'p111'
+                            },
+                            {
+                                id: '112',
+                                text: 'p112'
+                            },
+                            {
+                                id: '113',
+                                text: 'p113',
+                                children: [
+                                    {
+                                        id: '1131',
+                                        text: 'p1131',
+                                        children: [
+                                            {
+                                                id: '11311',
+                                                text: 'p11311'
+                                            },
+                                            {
+                                                id: '11312',
+                                                text: 'p11312'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        id: '1132',
+                                        text: 'p1132',
+                                        children: [
+                                            {
+                                                id: '11321',
+                                                text: 'p11321'
+                                            },
+                                            {
+                                                id: '11322',
+                                                text: 'p11322'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                id: '114',
+                                text: 'p114'
+                            }
+                        ]
+                    },
+                    {
+                        id: '12',
+                        text: 'p12',
+                        children: [
+                            {
+                                id: '121',
+                                text: 'p121'
+                            },
+                            {
+                                id: '122',
+                                text: 'p122'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: '2',
+                text: 'p2',
+                children: [
+                    {
+                        id: '21',
+                        text: 'p21',
+                        /*children: [
+                            {
+                                id: '211',
+                                text: 'p211'
+                            },
+                            {
+                                id: '212',
+                                text: 'p212'
+                            }
+                        ]*/
+                    },
+                    {
+                        id: '22',
+                        text: 'p22',
+                        children: [
+                            {
+                                id: '221',
+                                text: 'p221'
+                            },
+                            {
+                                id: '222',
+                                text: 'p222'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: '3',
+                text: 'p3',
+                children: [
+                    {
+                        id: '31',
+                        text: 'p31',
+                        children: [
+                            {
+                                id: '311',
+                                text: 'p311'
+                            },
+                            {
+                                id: '312',
+                                text: 'p312'
+                            },
+                            {
+                                id: '313',
+                                text: 'p313'
+                            },
+                            {
+                                id: '314',
+                                text: 'p314'
+                            }
+                        ]
+                    },
+                    {
+                        id: '32',
+                        text: 'p32',
+                        children: [
+                            {
+                                id: '321',
+                                text: 'p321'
+                            },
+                            {
+                                id: '322',
+                                text: 'p322'
+                            }
+                        ]
+                    }
+                ]
             }
-        })
-    </script>
+        ]
+    }
+    var p1 = new Picker({
+        el: document.getElementById('btn-timer'),
+        title: '请选择',
+        format: 'yyyy-MM-dd',
+        isDate: true,
+        value: new Date('2018-02-20'),
+        callBack(res) {
+            document.getElementById('btn-timer-val').textContent = res;
+        }
+    })
+    var p2 = new Picker({
+        el: document.getElementById('btn-timer2'),
+        title: '请选择',
+        format: 'yyyy-MM-dd hh:mm:ss',
+        isDate: true,
+        value: new Date('2018-02-20'),
+        callBack(res) {
+            document.getElementById('btn-timer-val2').textContent = res;
+        }
+    })
+    var p3 = new Picker({
+        el: document.getElementById('btn-common'),
+        title: '请选择',
+        data:[fn(30),fn(40)],
+        callBack(res) {
+            document.getElementById('btn-common-val').textContent = getVal(res);
+        }
+    })
+    var p4 = new Picker({
+        el: document.getElementById('btn-linkage'),
+        title: '请选择',
+        data:data,
+        callBack(res) {
+            document.getElementById('btn-linkage-val').textContent = getVal(res);
+        }
+    })
+    function fn(n) {
+       var arr = [];
+       for (var i= 1;i<n;i++){
+           arr.push({
+               id: i,
+               text: '列表' + i
+           })
+       }
+       return arr;
+    }
+    function getVal(arr) {
+        return arr.reduce(function (pre,cur) {
+            pre = pre + cur.text + ' ';
+            return pre;
+        },'');
+    }
+</script>
 </body>
 </html>
