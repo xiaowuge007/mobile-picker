@@ -95,6 +95,7 @@
 				obj.el_trans = self.getTranslate(this).top;
 				obj.max_h = -(self.selectGroup[index].num - 3) * obj.li_h;
 				removeClass(this, 'amanite');
+				removeClass(this, 'amanite-quick');
 				obj.start_x = target.pageY;
 				obj.start_time = new Date();
 				obj.sy = target.pageY;
@@ -210,8 +211,8 @@
 		//判断是否为3d设置为绝对定位
 		if(this.is3D){
 			this.selectGroup.forEach(function (val) {
-				var transStyle = getTransformData(val.el);
-				this.updateItems(transStyle.tY,val.el)
+				var transStyle = this.getTranslate(val.el);
+				this.updateItems(transStyle.top,val.el)
 			}.bind(this))
 		}
 
@@ -305,6 +306,12 @@
 	}
 	Picker.prototype.scrollList = function (val, item, itemIndex) {
 		var self = this;
+		var oldTop = this.getTranslate(item).top;
+		if(Math.abs(parseInt(val) - oldTop) <= liHight/2){
+			//慢速滑动减小动画时间
+			addClass(item, 'amanite-quick');
+			removeClass(item,'amanite');
+		}
 		item.style[transformProperty] = 'translate3d(' + 0 + 'px,' + parseInt(val) + 'px,' + 0 + 'px)';
 		var time = setTimeout(function () {
 			self.isMove = false;
@@ -408,9 +415,9 @@
 		let currentTans = this.getTranslate(item).top;
 		if (time < 300) {
 			//快速滑动 增加动画效果
-
 			currentTans = currentTans + momentumRatio * obj.dm;
 		}
+
 		if (currentTans < obj.max_h) {//如果列表底部超出了
 			this.scrollList(obj.max_h, item, index);//回弹
 			return;
@@ -571,19 +578,6 @@
 		var vendorPrefix = {trident: 'ms', gecko: 'Moz', webkit: 'Webkit', presto: 'O'}[engine];
 		var transformProperty = vendorPrefix + 'Transform';
 		return transformProperty;
-	}
-
-	function getTransformData(el) {
-		var transformProperty = getTransformProperty();
-		var str = el.style[transformProperty];
-		str = str.match(/translate3d\((.+?)\)/)[1];
-		str = str.split(',');
-		var obj = {
-			tX: str[0]?Number(str[0].replace(/px/g,'')) : 0,
-			tY: str[1]?Number(str[1].replace(/px/g,'')) : 0,
-			tZ: str[2]?Number(str[2].replace(/px/g,'')) : 0
-		}
-		return obj;
 	}
 	function removeClass(elem, cls) {
 		if (hasClass(elem, cls)) {

@@ -104,6 +104,9 @@
 .mb-picker-items.amanite{
     transition: transform 0.3s ease-out;
 }
+.mb-picker-items.amanite-quick{
+    transition: transform 0.1s ease-out;
+}
 .mb-picker-item.pre,.mb-picker-item.next{
     font-size: 14px;
     opacity: 8;
