@@ -36,7 +36,10 @@
     <button class="btn" id="btn-linkage">联动选择器</button>
     <span id="btn-linkage-val"></span>
 </div>
-<script src="js/picker.js"></script>
+<div class="div">
+  <button class="btn" id="btn-linkage2">3D选择器</button>
+</div>
+<script src="js/picker2.js"></script>
 <script>
     var data = {
         data: [
@@ -195,6 +198,7 @@
         title: '请选择',
         format: 'yyyy-MM-dd',
         isDate: true,
+        isPm: true,
         value: new Date('2018-02-20'),
         callBack(res) {
             document.getElementById('btn-timer-val').textContent = res;
@@ -207,6 +211,7 @@
         isDate: true,
         value: new Date('2018-02-20'),
         callBack(res) {
+
             document.getElementById('btn-timer-val2').textContent = res;
         }
     })
@@ -222,6 +227,16 @@
         el: document.getElementById('btn-linkage'),
         title: '请选择',
         data:data,
+        callBack(res) {
+            document.getElementById('btn-linkage-val').textContent = getVal(res);
+        }
+    })
+    var p5 = new Picker({
+        el: document.getElementById('btn-linkage2'),
+        title: '请选择',
+        format: 'yyyy-MM-dd hh:mm:ss',
+        isDate: true,
+        is3D: true,
         callBack(res) {
             document.getElementById('btn-linkage-val').textContent = getVal(res);
         }
@@ -242,6 +257,7 @@
             return pre;
         },'');
     }
+
 </script>
 </body>
 </html>

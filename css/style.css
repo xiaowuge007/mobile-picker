@@ -13,6 +13,7 @@
 .mb-picker-title{
     text-align: center;
     padding-top: 5px;
+    color: #404447;
 }
 .mb-picker-dialog.show{
     transform: translateY(0);
@@ -31,6 +32,9 @@
     border-top: 1px solid #ccc;
     margin: 0;
     transition: all 0.3s ease-out;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+
 }
 .mb-picker-box.show{
     transform: translateY(0);
@@ -40,34 +44,42 @@
     overflow: hidden;
     width: 100%;
     border-bottom: 1px solid #e8e8e8;
+    background-color: #F3F5F8;
 }
 .mb-picker-cancel{
     float: left;
     padding: 6px 10px;
     margin: 0 3px;
-    color: #333;
+    color: #3B7EF7;
     cursor: pointer;
+
 }
 .mb-picker-sure{
     float: right;
     padding: 5px 10px;
     margin: 0 3px;
-    color: #00c6ff;
+    color: #3B7EF7;
     cursor: pointer;
 }
 .mb-picker-item{
-    height: 34px;
+    height: 42px;
     text-align: center;
     color:#999;
-    line-height: 34px;
+    line-height: 42px;
     transition: color 0.3s;
+    font-size: 14px;
+    opacity: 0.9;
 }
 .mb-picker-item.active{
     color:#000;
+    font-size: 16px;
+    opacity: 1;
 }
 .mb-picker-body{
-    height: 252px;
+    height: 212px;
     position: relative;
+    -webkit-mask-box-image: linear-gradient(to top,transparent,transparent 5%,#fff 20%,#fff 80%,transparent 95%,transparent);
+    -webkit-mask-box-image: -webkit-linear-gradient(to top,transparent,transparent 5%,#fff 20%,#fff 80%,transparent 95%,transparent);
 }
 .mb-picker-group{
     height: 100%;
@@ -78,8 +90,8 @@
 .mb-picker-line{
     position: absolute;
     width: 100%;
-    top: 102px;
-    height:34px;
+    top: 84px;
+    height:42px;
     border-bottom: 1px solid #e8e8e8;
     border-top: 1px solid #e8e8e8;
     /*z-index: -1;*/
@@ -87,7 +99,50 @@
 .mb-picker-items{
     /*transform: translateY(90px);*/
     flex: 1;
+    position: relative;
 }
 .mb-picker-items.amanite{
     transition: transform 0.3s ease-out;
+}
+.mb-picker-item.pre,.mb-picker-item.next{
+    font-size: 14px;
+    opacity: 8;
+}
+/*3d样式*/
+.preserve-3d{
+    transform-style: preserve-3d;
+/*    perspective: 500px;*/
+    position: relative;
+}
+.preserve-3d .mb-picker-item{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+.mb-picker-body.is-3D{
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-origin: center center;
+    /*perspective: 1200px;*/
+}
+.mb-picker-body.is-3D .mb-picker-item{
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-origin: center center -110px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-size: 16px;
+}
+.mb-picker-body.is-3D .mb-picker-group{
+    perspective: 1200px;
+}
+.mb-picker-body.is-3D .mb-picker-group,.mb-picker-body.is-3D .mb-picker-items{
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
 }

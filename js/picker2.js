@@ -111,9 +111,7 @@
 				}
 				this.style[transformProperty] = 'translate3d(' + 0 + 'px,' + parseInt(move_y) + 'px,' + 0 + 'px)';
 				//设置3d变形
-				if(self.is3D){
-					self.updateItems(move_y,this)
-				}
+				self.transform3D(index);
 
 				//滑动力度
 				obj.dm = target.pageY - obj.start_x;
@@ -191,9 +189,6 @@
 		addClass(pickerBody, 'mb-picker-body');
 		addClass(pickerLine, 'mb-picker-line');
 		addClass(this.pickergroup, 'mb-picker-group');
-		if(this.is3D){
-			addClass(pickerBody,'is-3D');
-		}
 		pickerHead.appendChild(this.cancelEl)
 		pickerHead.appendChild(this.sureEl)
 		pickerHead.appendChild(pickerTitle);
@@ -208,17 +203,27 @@
 			this.commonCreate(option)
 		}
 		//判断是否为3d设置为绝对定位
-		if(this.is3D){
-			this.selectGroup.forEach(function (val) {
-				var transStyle = getTransformData(val.el);
-				this.updateItems(transStyle.tY,val.el)
-			}.bind(this))
-		}
-
+		this.setAbsolute();
 		//监听事件滚动事件
 		this.addEvent();
 		this.dialogEl.appendChild(this.box)
 		document.body.appendChild(this.dialogEl);
+	}
+	Picker.prototype.setAbsolute = function (index) {
+		if (!this.is3D) {
+			return;
+		}
+		var self = this;
+		if (index !== undefined && index !== '' && index !== null) {
+			var childs = this.selectGroup[index].el.children;
+			for (var i = 0; i < childs.length; i++) {
+				childs[i].style.top = i * liHight + 'px';
+			}
+		} else {
+			this.selectGroup.forEach(function (group,index) {
+				self.setAbsolute(index);
+			})
+		}
 	}
 	Picker.prototype.initValue = function (val) {
 		var self = this;
@@ -255,6 +260,8 @@
 		if (option.value) {
 			self.initValue(option.value);
 		}
+		//设置3d变形
+		self.transform3D();
 	}
 	Picker.prototype.lockCreate = function (option, data, level, flag) {
 		var pickerItems = document.createElement('div');
@@ -309,6 +316,7 @@
 		var time = setTimeout(function () {
 			self.isMove = false;
 			clearTimeout(time);
+			self.transform3D(itemIndex);
 		}, 300)
 		var index = this.getIndex(val);
 		var children = item.children;
@@ -320,29 +328,9 @@
 				addClass(children[i], 'active')
 			}
 		}
-		if(this.is3D){
-			this.updateItems(val,item);
-		}
 		var value = this.getItemValue(itemIndex, index);
 		this.setValue(itemIndex, value);
 		this.isLockValue(itemIndex, index);
-	}
-	Picker.prototype.updateItems = function(val,item){
-		var maxTranslate = liHight*2;
-		var percentage = (val-(Math.floor( (val-maxTranslate)/liHight) * liHight +maxTranslate)) / liHight;
-		var children = item.children;
-		for(var i = 0;i<children.length;i++){
-			var child = children[i];
-			var itemOffsetTop = i*liHight;
-			var translateOffset = maxTranslate -val;
-			var itemOffset = itemOffsetTop - translateOffset;
-			var percentage = itemOffset / liHight;
-
-			var angle = (-20*percentage);
-			if(angle > 180) angle = 180;
-			if(angle < -180) angle = -180;
-			child.style[transformProperty] = 'translate3d(0, ' + (-val+maxTranslate) + 'px, ' + '-110px) rotateX(' + angle + 'deg)';
-		}
 	}
 	Picker.prototype.isLockValue = function (itemIndex, index) {
 		//判断是否为联动
@@ -503,6 +491,9 @@
 		this.selectGroup[index].num = data.length;
 		this.data[index] = data;
 		this.selectData[index] = data[_index];
+		//设置3d
+		this.setAbsolute(index);
+		this.transform3D(index);
 	}
 	Picker.prototype.getItemIndex = function (val, data) {
 		var index = 0;
@@ -537,6 +528,28 @@
 			}
 		}
 		this.selectData[itemIndex] = this.data[itemIndex][liIndex];
+	}
+	Picker.prototype.transform3D = function (index) {
+		if(!this.is3D) return;
+		var self = this;
+		if (index !== undefined && index !== '' && index !== null) {
+			var vm = this.selectGroup[index].el;
+			var distance = this.getTranslate(vm).top;
+			var children = vm.children;
+			var cur = this.getIndex(distance);
+			for (var i = 0; i < children.length; i++) {
+				removeClass(children[i], 'active');
+				var deg = (cur - i) * 22;
+				children[i].style[transformProperty] = 'translate3d(0px, 0px, 0px) rotateX(' + deg + 'deg)';
+				if (i === cur) {
+					addClass(children[i], 'active')
+				}
+			}
+		} else {
+			self.selectGroup.forEach(function (obj, index) {
+				self.transform3D(index);
+			})
+		}
 	}
 
 //弹簧系数
@@ -573,18 +586,6 @@
 		return transformProperty;
 	}
 
-	function getTransformData(el) {
-		var transformProperty = getTransformProperty();
-		var str = el.style[transformProperty];
-		str = str.match(/translate3d\((.+?)\)/)[1];
-		str = str.split(',');
-		var obj = {
-			tX: str[0]?Number(str[0].replace(/px/g,'')) : 0,
-			tY: str[1]?Number(str[1].replace(/px/g,'')) : 0,
-			tZ: str[2]?Number(str[2].replace(/px/g,'')) : 0
-		}
-		return obj;
-	}
 	function removeClass(elem, cls) {
 		if (hasClass(elem, cls)) {
 			var newClass = ' ' + elem.className.replace(/[\t\r\n]/g, '') + ' ';
@@ -595,7 +596,7 @@
 		}
 	}
 
-	//获取月份
+//获取月份
 	function getDate(type, month, year) {
 		if (type === 'MM') {
 			return getCommonDate(1, 12);
@@ -632,13 +633,13 @@
 		return res;
 	}
 
-	//判断用户输入的格式
+//判断用户输入的格式
 	function getFormat(str) {
 		let arr = str.match(/[a-zA-Z]+/g);
 		return arr.length - 1;
 	}
 
-	//日期转化
+//日期转化
 	function formatDate(val, format) {
 		if (typeof val === 'string') {
 			val = new Date(val);

@@ -328,6 +328,7 @@
         }
         //判断是否为日期（也联动）
         if (this.isDate) {
+            debugger
             if (this.maxIndex > 1 && itemIndex === 1) {
                 var month = parseInt(this.data[itemIndex][index].id);
                 if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
@@ -339,6 +340,7 @@
                         this.updateData(itemIndex + 1, getDate('dd', month))
                     }
                 } else if (month == 2) {
+
                     if (this.selectGroup[itemIndex + 1].el.children.length != 28) {
                         this.updateData(itemIndex + 1, getDate('dd', month))
                     }
@@ -535,7 +537,7 @@
     }
 
 //获取月份
-    function getDate(type, month) {
+    function getDate(type, month,year) {
         if (type === 'MM') {
             return getCommonDate(1, 12);
         } else if (type === 'dd') {
@@ -547,6 +549,10 @@
             } else if (day30.indexOf(month) !== -1) {
                 return days.splice(0, 30)
             } else if (month === 2) {
+                //判断闰年还是平年
+                if(year && year%4 === 0){
+                    return days.splice(0, 29);
+                }
                 return days.splice(0, 28);
             }
         } else if (type === 'hh') {
